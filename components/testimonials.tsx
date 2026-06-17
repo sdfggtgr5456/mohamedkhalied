@@ -21,7 +21,7 @@ export function Testimonials() {
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading
           eyebrow="آراء العملاء"
-          title="ماذا يقول عنّي عملائي"
+          title="ماذا قال عنّي عملائي"
           subtitle="ثقة عملائي وشهاداتهم هي أصدق دليل على جودة العمل، وأكبر دافع لي لتقديم الأفضل في كل مشروع."
         />
 
