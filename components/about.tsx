@@ -1,6 +1,3 @@
-"use client"
-
-import { useEffect, useRef } from "react"
 import {
   CheckCircle2,
   Briefcase,
@@ -14,6 +11,7 @@ import {
   CalendarClock,
 } from "lucide-react"
 import { SectionHeading } from "@/components/section-heading"
+import { Reveal } from "@/components/reveal"
 
 const points = [
   { text: "هندسة أنظمة مؤسسية (ERP) قابلة للتوسّع", icon: Database },
@@ -37,54 +35,13 @@ const facts = [
  * reveal triggers as soon as the section enters the lower part of the viewport,
  * then stagger each `.reveal` child via a CSS transition-delay.
  */
-function useReveal<T extends HTMLElement>(stagger = 90) {
-  const ref = useRef<T | null>(null)
-
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-
-    const items = Array.from(el.querySelectorAll<HTMLElement>(".reveal"))
-    items.forEach((item, i) => {
-      item.style.transitionDelay = `${i * stagger}ms`
-    })
-
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    if (prefersReduced) {
-      items.forEach((item) => item.classList.add("is-visible"))
-      return
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            items.forEach((item) => item.classList.add("is-visible"))
-            observer.disconnect()
-            break
-          }
-        }
-      },
-      // Fire when the block is ~12% into the viewport from the bottom — reliable
-      // on both tall mobile layouts and wide desktop screens.
-      { threshold: 0, rootMargin: "0px 0px -12% 0px" },
-    )
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [stagger])
-
-  return ref
-}
-
 export function About() {
-  const ref = useReveal<HTMLDivElement>(90)
-
   return (
     <section id="about" className="section-seam relative py-20">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeading eyebrow="نبذة عني" title="من أنا وماذا أقدم" />
 
-        <div ref={ref} className="grid items-stretch gap-8 lg:grid-cols-2">
+        <Reveal className="grid items-stretch gap-8 lg:grid-cols-2" stagger={90}>
           {/* Bio + facts */}
           <div className="reveal reveal-right flex flex-col items-center text-center lg:items-start lg:text-right">
             <span className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/5 px-4 py-1.5 text-xs font-semibold text-gold">
@@ -148,7 +105,7 @@ export function About() {
               })}
             </ul>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   )

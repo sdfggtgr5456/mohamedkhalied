@@ -3,6 +3,7 @@
 import { useActionState, useEffect, useRef } from "react"
 import { MessageCircle, Mail, Phone, Send, Loader2, Check, ArrowUpLeft } from "lucide-react"
 import { SectionHeading } from "@/components/section-heading"
+import { Reveal } from "@/components/reveal"
 import { profile, socials } from "@/lib/data"
 import { sendMessage, type SendMessageState } from "@/app/actions/send-message"
 
@@ -33,9 +34,9 @@ export function Contact() {
           subtitle="هل لديك فكرة أو مشروع تريد تحويله إلى منتج رقمي ناجح؟ شاركني التفاصيل وسأعود إليك باستشارة واضحة وخطة تنفيذ عملية تناسب أهدافك وميزانيتك."
         />
 
-        <div className="grid items-stretch gap-6 lg:grid-cols-2">
+        <Reveal className="grid items-stretch gap-6 lg:grid-cols-2" stagger={140}>
           {/* Contact info */}
-          <div className="space-y-4">
+          <div className="reveal reveal-right space-y-4">
             {contactItems.map((item) => {
               const Icon = item.icon
               return (
@@ -98,7 +99,7 @@ export function Contact() {
           </div>
 
           {/* Form */}
-          <form ref={formRef} action={formAction} className="flex flex-col rounded-2xl border border-border bg-card p-6">
+          <form ref={formRef} action={formAction} className="reveal reveal-left flex flex-col rounded-2xl border border-border bg-card p-6">
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label="الاسم" name="name" placeholder="اكتب اسمك" />
               <Field label="البريد الإلكتروني" name="email" type="email" placeholder="example@mail.com" />
@@ -156,7 +157,7 @@ export function Contact() {
               </p>
             )}
           </form>
-        </div>
+        </Reveal>
       </div>
     </section>
   )

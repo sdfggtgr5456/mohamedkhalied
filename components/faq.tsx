@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { ChevronDown } from "lucide-react"
 import { SectionHeading } from "@/components/section-heading"
+import { Reveal } from "@/components/reveal"
 import { faqs } from "@/lib/data"
 import { cn } from "@/lib/utils"
 
@@ -14,11 +15,11 @@ export function Faq() {
       <div className="mx-auto max-w-3xl px-4 lg:px-8">
         <SectionHeading eyebrow="الأسئلة الشائعة" title="إجابات على أسئلتك" />
 
-        <div className="space-y-3">
+        <Reveal className="space-y-3" stagger={70}>
           {faqs.map((faq, i) => {
             const isOpen = open === i
             return (
-              <div key={faq.q} className="overflow-hidden rounded-xl border border-border bg-card">
+              <div key={faq.q} className="reveal overflow-hidden rounded-xl border border-border bg-card">
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? null : i)}
@@ -46,7 +47,7 @@ export function Faq() {
               </div>
             )
           })}
-        </div>
+        </Reveal>
       </div>
     </section>
   )

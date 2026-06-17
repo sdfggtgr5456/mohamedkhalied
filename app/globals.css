@@ -428,4 +428,61 @@
       transition: none;
     }
   }
+
+  /* ---- Hero intro: runs once on page load (above the fold, no scroll) ---- */
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 26px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes hero-pop {
+    0% {
+      opacity: 0;
+      transform: scale(0.94);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .hero-intro {
+    opacity: 0;
+    animation: hero-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .hero-intro-photo {
+    opacity: 0;
+    animation: hero-pop 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .hero-d1 {
+    animation-delay: 0.08s;
+  }
+  .hero-d2 {
+    animation-delay: 0.18s;
+  }
+  .hero-d3 {
+    animation-delay: 0.28s;
+  }
+  .hero-d4 {
+    animation-delay: 0.38s;
+  }
+  .hero-d5 {
+    animation-delay: 0.48s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-intro,
+    .hero-intro-photo {
+      opacity: 1;
+      animation: none;
+    }
+  }
 }

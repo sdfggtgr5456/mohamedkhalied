@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { Code2 } from "lucide-react"
 import { SectionHeading } from "@/components/section-heading"
+import { Reveal } from "@/components/reveal"
 import { skills, technologies } from "@/lib/data"
 
 function useInView<T extends HTMLElement>(threshold = 0.25) {
@@ -88,13 +89,13 @@ export function Skills() {
               <Code2 className="size-5" />
               <span className="font-bold">أدواتي</span>
             </div>
-            <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-5">
+            <Reveal className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-5" stagger={45}>
               {technologies.map((tech) => {
                 const Icon = tech.icon
                 return (
                   <div
                     key={tech.name}
-                    className="group flex flex-col items-center justify-center gap-2.5 rounded-xl border border-border bg-background p-3 text-center transition-all duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-lg hover:shadow-gold/5"
+                    className="reveal group flex flex-col items-center justify-center gap-2.5 rounded-xl border border-border bg-background p-3 text-center transition-all duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-lg hover:shadow-gold/5"
                   >
                     <Icon
                       className="size-7 transition-transform duration-300 group-hover:scale-110"
@@ -107,7 +108,7 @@ export function Skills() {
                   </div>
                 )
               })}
-            </div>
+            </Reveal>
           </div>
 
           {/* Skill bars */}

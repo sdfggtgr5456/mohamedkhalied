@@ -3,6 +3,7 @@
 import { useRef } from "react"
 import { Quote, Star, ChevronLeft, ChevronRight } from "lucide-react"
 import { SectionHeading } from "@/components/section-heading"
+import { Reveal } from "@/components/reveal"
 import { testimonials } from "@/lib/data"
 
 export function Testimonials() {
@@ -26,34 +27,36 @@ export function Testimonials() {
         />
 
         <div className="relative">
-          <div
-            ref={scrollerRef}
-            className="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {testimonials.map((t) => (
-              <figure
-                key={t.name}
-                className="flex w-[85%] shrink-0 snap-start flex-col rounded-2xl border border-border bg-card p-6 sm:w-[calc((100%-1.5rem)/2)] md:w-[calc((100%-3rem)/3)]"
-              >
-                <Quote className="size-8 text-gold/50" />
-                <blockquote className="mt-4 flex-1 leading-relaxed text-foreground">{t.text}</blockquote>
-                <div className="mt-4 flex gap-1">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="size-4 fill-gold text-gold" />
-                  ))}
-                </div>
-                <figcaption className="mt-4 flex items-center gap-3 border-t border-border pt-4">
-                  <span className="grid size-10 place-items-center rounded-full bg-gold/15 font-bold text-gold">
-                    {t.name.charAt(0)}
-                  </span>
-                  <div>
-                    <div className="font-bold text-foreground">{t.name}</div>
-                    <div className="text-xs text-muted-foreground">{t.title}</div>
+          <Reveal stagger={90}>
+            <div
+              ref={scrollerRef}
+              className="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-4 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {testimonials.map((t) => (
+                <figure
+                  key={t.name}
+                  className="reveal flex w-[85%] shrink-0 snap-start flex-col rounded-2xl border border-border bg-card p-6 transition-colors duration-300 hover:border-gold/40 sm:w-[calc((100%-1.5rem)/2)] md:w-[calc((100%-3rem)/3)]"
+                >
+                  <Quote className="size-8 text-gold/50" />
+                  <blockquote className="mt-4 flex-1 leading-relaxed text-foreground">{t.text}</blockquote>
+                  <div className="mt-4 flex gap-1">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="size-4 fill-gold text-gold" />
+                    ))}
                   </div>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
+                  <figcaption className="mt-4 flex items-center gap-3 border-t border-border pt-4">
+                    <span className="grid size-10 place-items-center rounded-full bg-gold/15 font-bold text-gold">
+                      {t.name.charAt(0)}
+                    </span>
+                    <div>
+                      <div className="font-bold text-foreground">{t.name}</div>
+                      <div className="text-xs text-muted-foreground">{t.title}</div>
+                    </div>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </Reveal>
 
           <div className="mt-6 flex items-center justify-center gap-3">
             <button

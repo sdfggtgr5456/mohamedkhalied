@@ -1,4 +1,5 @@
 import { SectionHeading } from "@/components/section-heading"
+import { Reveal } from "@/components/reveal"
 import { journey } from "@/lib/data"
 
 export function Journey() {
@@ -7,9 +8,9 @@ export function Journey() {
       <div className="mx-auto max-w-3xl px-4 lg:px-8">
         <SectionHeading eyebrow="رحلة العمل" title="مسيرتي المهنية عبر السنوات" />
 
-        <ol className="relative border-r-2 border-border pr-6">
-          {journey.map((item, i) => (
-            <li key={item.year} className="relative mb-8 last:mb-0">
+        <Reveal as="ol" className="relative border-r-2 border-border pr-6" stagger={120}>
+          {journey.map((item) => (
+            <li key={item.year} className="reveal reveal-right relative mb-8 last:mb-0">
               <span className="absolute right-[-2.1rem] top-1 grid size-6 place-items-center rounded-full border-2 border-gold bg-background">
                 <span className="size-2.5 rounded-full bg-gold" />
               </span>
@@ -19,7 +20,7 @@ export function Journey() {
               </div>
             </li>
           ))}
-        </ol>
+        </Reveal>
       </div>
     </section>
   )

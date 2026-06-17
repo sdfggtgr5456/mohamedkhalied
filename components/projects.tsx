@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { ArrowUpLeft } from "lucide-react"
 import { SectionHeading } from "@/components/section-heading"
+import { Reveal } from "@/components/reveal"
 import { projects } from "@/lib/data"
 
 export function Projects() {
@@ -13,11 +14,11 @@ export function Projects() {
           subtitle="مجموعة مختارة من الحلول الرقمية التي صمّمتها وطوّرتها من الفكرة حتى الإطلاق — من المتاجر الإلكترونية والمنصات التجارية إلى الأنظمة المؤسسية ولوحات التحكم الإدارية. كل مشروع يعكس التزامي ببناء أنظمة قابلة للتوسّع، عالية الأداء، وآمنة، تحقق أهداف العميل وتترك أثراً ملموساً في أعماله."
         />
 
-        <div className="grid gap-6 sm:grid-cols-2">
+        <Reveal className="grid gap-6 sm:grid-cols-2" stagger={90}>
           {projects.map((project) => (
             <article
               key={project.title}
-              className="group overflow-hidden rounded-2xl border border-border bg-card transition-colors hover:border-gold/50"
+              className="reveal group overflow-hidden rounded-2xl border border-border bg-card transition-all duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-lg hover:shadow-gold/5"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
                 <Image
@@ -39,7 +40,7 @@ export function Projects() {
               </div>
             </article>
           ))}
-        </div>
+        </Reveal>
       </div>
     </section>
   )

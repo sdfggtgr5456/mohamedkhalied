@@ -1,5 +1,6 @@
 import { ArrowLeft } from "lucide-react"
 import { SectionHeading } from "@/components/section-heading"
+import { Reveal } from "@/components/reveal"
 import { services, profile } from "@/lib/data"
 
 export function Services() {
@@ -12,25 +13,25 @@ export function Services() {
           subtitle="أقدّم حلولاً رقمية متكاملة تغطي دورة المشروع بالكامل — من تحليل المتطلبات وتصميم تجربة المستخدم، إلى تطوير الواجهات الأمامية والأنظمة الخلفية، وبناء واجهات برمجية (APIs) آمنة وقابلة للتوسّع، وصولاً إلى النشر والصيانة والدعم المستمر. هدفي هو تحويل أفكارك إلى منتجات رقمية عالية الأداء تواكب نمو أعمالك وتمنحك ميزة تنافسية حقيقية."
         />
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <Reveal className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" stagger={80}>
           {services.map((service) => {
             const Icon = service.icon
             return (
               <article
                 key={service.title}
-                className="group rounded-2xl border border-border bg-card p-6 transition-colors hover:border-gold/50"
+                className="reveal group rounded-2xl border border-border bg-card p-6 transition-colors duration-300 hover:-translate-y-1 hover:border-gold/50 hover:shadow-lg hover:shadow-gold/5"
               >
-                <div className="grid size-12 place-items-center rounded-xl border border-gold/30 bg-gold/10 text-gold transition-colors group-hover:bg-gold group-hover:text-gold-foreground">
-                  <Icon className="size-6" />
+                <div className="grid size-12 place-items-center rounded-xl border border-gold/30 bg-gold/10 text-gold transition-colors duration-300 group-hover:bg-gold group-hover:text-gold-foreground">
+                  <Icon className="size-6 transition-transform duration-300 group-hover:scale-110" />
                 </div>
                 <h3 className="mt-4 text-lg font-bold text-foreground">{service.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{service.desc}</p>
               </article>
             )
           })}
-        </div>
+        </Reveal>
 
-        <div className="mt-10 text-center">
+        <Reveal className="mt-10 text-center reveal">
           <a
             href={`https://wa.me/${profile.whatsapp}`}
             target="_blank"
@@ -44,7 +45,7 @@ export function Services() {
             <span className="relative">اطلب خدمتك الآن</span>
             <ArrowLeft className="relative size-5 shrink-0 transition-transform duration-300 group-hover:-translate-x-1" aria-hidden />
           </a>
-        </div>
+        </Reveal>
       </div>
     </section>
   )
