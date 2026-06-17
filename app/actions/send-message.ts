@@ -27,9 +27,6 @@ export async function sendMessage(
   const subject = String(formData.get("subject") || "").trim()
   const message = String(formData.get("message") || "").trim()
 
-  console.log("[v0] sendMessage fields:", { name, senderEmail, subject, hasMessage: !!message })
-  console.log("[v0] sendMessage apiKey present:", !!process.env.RESEND_API_KEY)
-
   if (!name || !senderEmail || !message) {
     return { ok: false, error: "يرجى تعبئة الاسم والبريد الإلكتروني والرسالة." }
   }
