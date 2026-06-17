@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <polygon points="256,24 488,148 488,364 256,488 24,364 24,148" fill="none" stroke="#e3b94f" stroke-width="22" stroke-linejoin="round"/>
+  <text x="256" y="256" font-family="Georgia, 'Times New Roman', serif" font-size="240" font-weight="700" fill="#e3b94f" text-anchor="middle" dominant-baseline="central">MK</text>
+</svg>
