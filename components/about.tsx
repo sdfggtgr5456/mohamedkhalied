@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import {
   CheckCircle2,
   Briefcase,
@@ -30,31 +30,54 @@ const facts = [
   { icon: MapPin, label: "العمل", value: "عن بُعد · عالمياً" },
 ]
 
-function useInView<T extends HTMLElement>() {
+/**
+ * Reveals children with a staggered scroll animation. Instead of relying on a
+ * single high threshold over a very tall container (which never fired reliably
+ * on mobile), we watch the wrapper with a negative bottom rootMargin so the
+ * reveal triggers as soon as the section enters the lower part of the viewport,
+ * then stagger each `.reveal` child via a CSS transition-delay.
+ */
+function useReveal<T extends HTMLElement>(stagger = 90) {
   const ref = useRef<T | null>(null)
-  const [inView, setInView] = useState(false)
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
+
+    const items = Array.from(el.querySelectorAll<HTMLElement>(".reveal"))
+    items.forEach((item, i) => {
+      item.style.transitionDelay = `${i * stagger}ms`
+    })
+
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (prefersReduced) {
+      items.forEach((item) => item.classList.add("is-visible"))
+      return
+    }
+
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true)
-          observer.disconnect()
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            items.forEach((item) => item.classList.add("is-visible"))
+            observer.disconnect()
+            break
+          }
         }
       },
-      { threshold: 0.2 },
+      // Fire when the block is ~12% into the viewport from the bottom — reliable
+      // on both tall mobile layouts and wide desktop screens.
+      { threshold: 0, rootMargin: "0px 0px -12% 0px" },
     )
     observer.observe(el)
     return () => observer.disconnect()
-  }, [])
+  }, [stagger])
 
-  return { ref, inView }
+  return ref
 }
 
 export function About() {
-  const { ref, inView } = useInView<HTMLDivElement>()
+  const ref = useReveal<HTMLDivElement>(90)
 
   return (
     <section id="about" className="section-seam relative py-20">
@@ -63,11 +86,7 @@ export function About() {
 
         <div ref={ref} className="grid items-stretch gap-8 lg:grid-cols-2">
           {/* Bio + facts */}
-          <div
-            className={`flex flex-col items-center text-center transition-all duration-700 lg:items-start lg:text-right ${
-              inView ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-            }`}
-          >
+          <div className="reveal reveal-right flex flex-col items-center text-center lg:items-start lg:text-right">
             <span className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/5 px-4 py-1.5 text-xs font-semibold text-gold">
               <span className="size-1.5 rounded-full bg-gold" />
               متاح لمشاريع جديدة
@@ -88,16 +107,10 @@ export function About() {
             </p>
 
             <div className="mt-8 grid w-full grid-cols-1 gap-4 sm:grid-cols-3">
-              {facts.map((f, i) => {
+              {facts.map((f) => {
                 const Icon = f.icon
                 return (
-                  <div
-                    key={f.label}
-                    className={`stat-card transition-all duration-700 ${
-                      inView ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-                    }`}
-                    style={{ transitionDelay: `${150 + i * 120}ms` }}
-                  >
+                  <div key={f.label} className="stat-card reveal">
                     <div className="stat-card-inner flex flex-col items-center bg-card p-5">
                       <span className="flex size-10 items-center justify-center rounded-full bg-gold/10">
                         <Icon className="size-5 text-gold" />
@@ -112,26 +125,18 @@ export function About() {
           </div>
 
           {/* Services list */}
-          <div
-            className={`rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm transition-all duration-700 sm:p-8 ${
-              inView ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-            }`}
-            style={{ transitionDelay: "200ms" }}
-          >
+          <div className="reveal reveal-left rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm sm:p-8">
             <h4 className="mb-6 flex items-center gap-2 text-lg font-bold text-foreground">
               <span className="h-5 w-1 rounded-full bg-gold" />
               ما الذي أقدمه لك
             </h4>
             <ul className="grid gap-3">
-              {points.map((p, i) => {
+              {points.map((p) => {
                 const Icon = p.icon
                 return (
                   <li
                     key={p.text}
-                    className={`group flex items-center gap-4 rounded-2xl border border-border bg-background/40 p-4 transition-all duration-500 hover:border-gold/50 hover:bg-gold/5 ${
-                      inView ? "translate-x-0 opacity-100" : "translate-x-6 opacity-0"
-                    }`}
-                    style={{ transitionDelay: `${250 + i * 90}ms` }}
+                    className="reveal group flex items-center gap-4 rounded-2xl border border-border bg-background/40 p-4 transition-colors duration-300 hover:border-gold/50 hover:bg-gold/5"
                   >
                     <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold transition-transform duration-300 group-hover:scale-110">
                       <Icon className="size-5" />

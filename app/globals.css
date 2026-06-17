@@ -388,4 +388,44 @@
     content-visibility: auto;
     contain-intrinsic-size: auto 700px;
   }
+
+  /* ---- Reusable scroll-reveal system ----
+     A single premium reveal: elements start slightly lower, smaller and blurred,
+     then settle with a smooth spring-like easing. GPU-accelerated (transform +
+     opacity + filter only) so it stays buttery on desktop and mobile alike. */
+  .reveal {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0) scale(0.985);
+    filter: blur(6px);
+    transition:
+      opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity, filter;
+  }
+
+  /* Directional variants for richer choreography */
+  .reveal-right {
+    transform: translate3d(34px, 0, 0) scale(0.985);
+  }
+  .reveal-left {
+    transform: translate3d(-34px, 0, 0) scale(0.985);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .reveal-right,
+    .reveal-left {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      transition: none;
+    }
+  }
 }
