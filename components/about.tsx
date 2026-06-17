@@ -128,16 +128,16 @@ export function About() {
                 return (
                   <li
                     key={p.text}
-                    className={`group flex items-center gap-4 rounded-2xl border border-border bg-background/40 p-4 transition-all duration-500 hover:border-gold/50 hover:bg-gold/5 ${
-                      inView ? "translate-x-0 opacity-100" : "translate-x-6 opacity-0"
+                    className={`service-item group flex items-center gap-4 rounded-2xl border border-border bg-background/40 p-4 hover:border-gold/50 hover:bg-gold/5 ${
+                      inView ? "service-item-enter" : "opacity-0"
                     }`}
-                    style={{ transitionDelay: `${250 + i * 90}ms` }}
+                    style={{ animationDelay: `${i * 80}ms` }}
                   >
-                    <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold transition-transform duration-300 group-hover:scale-110">
+                    <span className="relative z-[1] flex size-10 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold transition-transform duration-200 group-hover:scale-110 group-active:scale-110">
                       <Icon className="size-5" />
                     </span>
-                    <span className="flex-1 text-sm font-medium text-foreground">{p.text}</span>
-                    <CheckCircle2 className="size-5 shrink-0 text-gold/40 transition-colors group-hover:text-gold" />
+                    <span className="relative z-[1] flex-1 text-sm font-medium text-foreground">{p.text}</span>
+                    <CheckCircle2 className="relative z-[1] size-5 shrink-0 text-gold/40 transition-colors duration-200 group-hover:text-gold group-active:text-gold" />
                   </li>
                 )
               })}
